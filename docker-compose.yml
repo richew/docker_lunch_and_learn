@@ -1,0 +1,31 @@
+version: '3.3'
+volumes:
+  db:
+    driver:
+      local
+  data:
+    driver:
+      local
+
+services:
+  db:
+    build:
+      context: ./lesson2
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: abc@123
+      MYSQL_USER: user
+      MYSQL_PASSWORD: c4tg1fs
+    volumes:
+      - "./db:/var/lib/mysql"
+      - "./data:/docker-entrypoint-initdb.d"
+    ports:
+      - "3306:3306"
+
+  node-service:
+    build:
+      context: ./lesson1
+    environment:
+      PORT: 8080
+    ports:
+      - "8080:8080"
